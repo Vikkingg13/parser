@@ -1,5 +1,8 @@
 package ru.job4j.parser;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +13,7 @@ import java.util.List;
  * @version 1.0
  */
 public class StoreSQL implements AutoCloseable {
+    private static final Logger LOG = LogManager.getLogger(StoreSQL.class.getName());
     private Connection connection;
 
     public StoreSQL(Connection connection) {
@@ -29,7 +33,7 @@ public class StoreSQL implements AutoCloseable {
                     config.get("password")
             );
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            LOG.error("message", ex);
         }
         return connection != null;
     }
@@ -50,7 +54,7 @@ public class StoreSQL implements AutoCloseable {
             }
             statement.executeBatch();
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            LOG.error("message", ex);
         }
     }
 
@@ -72,7 +76,7 @@ public class StoreSQL implements AutoCloseable {
                 result.add(vacancy);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            LOG.error("message", ex);
         }
         return result;
     }

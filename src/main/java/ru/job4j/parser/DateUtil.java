@@ -1,5 +1,8 @@
 package ru.job4j.parser;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +15,7 @@ import java.util.Date;
  * @version 1.0
  */
 public class DateUtil {
+    private static final Logger LOG = LogManager.getLogger(DateUtil.class.getName());
     private static DateFormatSymbols formatSymbols = new DateFormatSymbols() {
         @Override
         public String[] getMonths() {
@@ -47,7 +51,7 @@ public class DateUtil {
         try {
             result = formatter.parse(date);
         } catch (ParseException ex) {
-            System.out.println(ex.getMessage());
+            LOG.error("message", ex);
         }
         return result;
     }

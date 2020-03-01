@@ -1,5 +1,7 @@
 package ru.job4j.parser;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
@@ -10,6 +12,7 @@ import org.quartz.impl.StdSchedulerFactory;
  */
 
 public class Quartz {
+    private static final Logger LOG = LogManager.getLogger(Quartz.class.getName());
     /**
      * Start application
      */
@@ -33,7 +36,7 @@ public class Quartz {
             scheduler.scheduleJob(detail, trigger);
             scheduler.start();
         } catch (SchedulerException ex) {
-            System.out.println(ex.getMessage());
+            LOG.error("message", ex);
         }
     }
     public static void main(String[] args) {

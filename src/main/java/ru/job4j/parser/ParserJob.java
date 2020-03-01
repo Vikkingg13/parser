@@ -21,15 +21,18 @@ public class ParserJob implements Job {
         Config config = (Config) jobExecutionContext.getJobDetail().getJobDataMap().get("config");
         LOG.info("Start date: {}", config.get("start-date"));
         ParserHTML parser = new ParserHTML(
-                config.get("address"),
+                new SiteSqlRu(),
                 config.get("regular"),
                 config.get("start-date")
         );
-        StoreSQL sql = new StoreSQL();
-        sql.init(config);
-        sql.save(parser.parse());
-        String date = DateUtil.format(Calendar.getInstance().getTime());
-        config.set("start-date", date);
-        LOG.info("Start date: {}", config.get("start-date"));
+            try (StoreSQL sql = new StoreSQL()) {
+                sql.init(config);
+                sql.save(parser.parse());
+                String date = DateUtil.format(Calendar.getInstance().getTime());
+                config.set("start-date", date);
+                LOG.info("Start date: {}", config.get("start-date"));
+            } catch (Exception ex) {
+                LOG.error("message", ex);
+            }
     }
 }

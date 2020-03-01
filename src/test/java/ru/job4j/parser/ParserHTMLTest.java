@@ -9,9 +9,8 @@ public class ParserHTMLTest {
     public void whenParseVacanciesPagesThenListSizeEquals14() {
         Config config = new Config("app.properties");
         config.init();
-        config.set("address", "https://vikkingg13.github.io");
         ParserHTML parser = new ParserHTML(
-                config.get("address"),
+                new SiteSqlRu("https://vikkingg13.github.io"),
                 config.get("regular"),
                 config.get("start-date")
         );
@@ -22,10 +21,9 @@ public class ParserHTMLTest {
     public void whenParseVacanciesPagesWithLessDateRangeThenReturnListSizeEquals8() {
         Config config = new Config("app.properties");
         config.init();
-        config.set("address", "https://vikkingg13.github.io");
         config.set("start-date", "1 фев 20, 00:00");
         ParserHTML parser = new ParserHTML(
-                config.get("address"),
+                new SiteSqlRu("https://vikkingg13.github.io"),
                 config.get("regular"),
                 config.get("start-date")
         );
@@ -36,9 +34,8 @@ public class ParserHTMLTest {
     public void whenParseVacanciesPagesThenFirstVacanciesNameEqualsJavaDeveloper() {
         Config config = new Config("app.properties");
         config.init();
-        config.set("address", "https://vikkingg13.github.io");
         ParserHTML parser = new ParserHTML(
-                config.get("address"),
+                new SiteSqlRu("https://vikkingg13.github.io"),
                 config.get("regular"),
                 config.get("start-date")
         );
